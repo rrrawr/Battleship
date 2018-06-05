@@ -1,3 +1,19 @@
-This town 
-over and over the only truth
-everything comes back to u
+public class Search{
+static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Integer>>();
+Public void Search(){
+  UpdateScoreBoard();
+  FindMaxScore();
+}
+Public void UpdateScoreBoard(){
+{
+  for(int i = 1; i < scoreBoard.size(); i++)
+  {
+    for( int j = 1; j < scoreboard.size<>.size(); j++)
+    {
+      DetermineScore(i,j);
+    }
+  }
+}
+public void FindMaxScore(){
+
+}
