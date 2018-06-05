@@ -1,19 +1,31 @@
 public class Search{
-static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Integer>>();
-Public void Search(){
-  UpdateScoreBoard();
-  FindMaxScore();
-}
-Public void UpdateScoreBoard(){
-{
-  for(int i = 1; i < scoreBoard.size(); i++)
-  {
-    for( int j = 1; j < scoreboard.size<>.size(); j++)
+  static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Integer>>();
+  Public void Search(){
+    UpdateScoreBoard();
+    FindMaxScore();
+  }
+  Public void UpdateScoreBoard() {
+    for(int i = 1; i < scoreBoard.size()-2; i++)
     {
-      DetermineScore(i,j);
+      for( int j = 1; j < scoreBoard.get(i).size().size()-2; j++)
+      {
+        scoreBoard.get(i).set(j) = DetermineScore(i,j);
+      }
     }
   }
-}
-public void FindMaxScore(){
-
+  public void FindMaxScore(){
+    int maxScore = scoreBoard.get(1).get(1);
+    int maxI = 1;
+    int maxJ = 1;
+    for(int i = 1; i < scoreBoard.size()-2; i++)
+    {
+      for( int j = 1; j < scoreBoard.get(i).size().size()-2; j++)
+      {
+        scoreBoard.get(i).set(j) = DetermineScore(i,j);
+      }
+    }
+  }
+  public int DetermineScore(int i, int j){
+  
+  }
 }
