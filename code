@@ -29,7 +29,7 @@ public class Search{
         }
       }
     }
-    System.out.print
+    System.out.print("hit" + (maxI+1) + convert(maxJ));
   }
   public int DetermineScore(int i, int j){
     for(int i = 1; i < scoreBoard.size()-2; i++)
@@ -48,6 +48,38 @@ public class Search{
         }
         scoreBoard.get(i).set(j, total);
       }
+    }
+  }
+  public String convert(int num){
+    if(num == 0){
+      return "A";
+    }
+    if(num == 1){
+      return "B";
+    }
+    if(num == 2){
+      return "C";
+    }
+    if(num == 3){
+      return "D";
+    }
+    if(num == 4){
+      return "E";
+    }
+    if(num == 5){
+      return "F";
+    }
+    if(num == 6){
+      return "G";
+    }
+    if(num == 7){
+      return "H";
+    }
+    if(num == 8){
+      return "I";
+    }
+    if(num == 9){
+      return "J";
     }
   }
 }
