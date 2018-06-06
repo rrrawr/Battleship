@@ -5,9 +5,9 @@ public class Search{
     FindMaxScore();
   }
   Public void UpdateScoreBoard() {
-    for(int i = 1; i < scoreBoard.size()-2; i++)
+    for(int i = 0; i < scoreBoard.size(); i++)
     {
-      for( int j = 1; j < scoreBoard.get(i).size().size()-2; j++)
+      for( int j = 0; j < scoreBoard.get(i).size().size(); j++)
       {
         scoreBoard.get(i).set(j) = DetermineScore(i,j);
       }
@@ -17,15 +17,37 @@ public class Search{
     int maxScore = scoreBoard.get(1).get(1);
     int maxI = 1;
     int maxJ = 1;
+    for(int i = 1; i < scoreBoard.getSize()-2; i++)
+    {
+      for( int j = 1; j < scoreBoard.get(i).size().size()-2; j++)
+      {
+        if(scoreBoard.get(i).get(j) > maxScore)
+        {
+          maxScore = scoreBoard.get(i).get(j);
+          maxI = i;
+          maxj = J;
+        }
+      }
+    }
+    System.out.print
+  }
+  public int DetermineScore(int i, int j){
     for(int i = 1; i < scoreBoard.size()-2; i++)
     {
       for( int j = 1; j < scoreBoard.get(i).size().size()-2; j++)
       {
-        scoreBoard.get(i).set(j) = DetermineScore(i,j);
+        int l = getLength(i, j, l);
+        int r = getLength(i, j, r);
+        int u = getLength(i, j, u);
+        int d = getLength(i, j, d);
+        int total = 0;
+        for(int k = 0; k< shipAlive.getSize(); k++)
+        {
+          int total += getCombo(r, l, ship.get(k).get(1));
+          int total += getCombo(u, d, ship.get(k).get(1));
+        }
+        scoreBoard.get(i).set(j, total);
       }
     }
-  }
-  public int DetermineScore(int i, int j){
-  
   }
 }
