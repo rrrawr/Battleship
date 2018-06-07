@@ -1,89 +1,83 @@
+import java.util.*;
 public class Search{
-  static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Integer>>();
-  Public void Search(){
-    UpdateScoreBoard();
+static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Integer>>();    //initialize!!!
+  public static void main(String[] args) {
+    SearchShip();
+  }
+  public static void SearchShip(){
+    DetermineScore();
     FindMaxScore();
   }
-  Public void UpdateScoreBoard() {
-    for(int i = 0; i < scoreBoard.size(); i++)
-    {
-      for( int j = 0; j < scoreBoard.get(i).size().size(); j++)
-      {
-        scoreBoard.get(i).set(j) = DetermineScore(i,j);
-      }
-    }
-  }
-  public void FindMaxScore(){
+  public static void FindMaxScore(){
     int maxScore = scoreBoard.get(1).get(1);
     int maxI = 1;
     int maxJ = 1;
-    for(int i = 1; i < scoreBoard.getSize()-2; i++)
+    for(int i = 1; i < scoreBoard.size()-2; i++)
     {
-      for( int j = 1; j < scoreBoard.get(i).size().size()-2; j++)
+      for( int j = 1; j < scoreBoard.get(i).size()-2; j++)
       {
         if(scoreBoard.get(i).get(j) > maxScore)
         {
           maxScore = scoreBoard.get(i).get(j);
           maxI = i;
-          maxj = J;
+          maxJ = j;
         }
       }
     }
     System.out.print("hit" + (maxI+1) + convert(maxJ));
   }
-  public int DetermineScore(int i, int j){
-    for(int i = 1; i < scoreBoard.size()-2; i++)
-    {
-      for( int j = 1; j < scoreBoard.get(i).size().size()-2; j++)
-      {
+  public static int DetermineScore(){
+    for(int i = 0; i < scoreBoard.size(); i++){
+      for( int j = 0; j < scoreBoard.get(i).size(); j++){
+        int total = 0;
         int l = getLength(i, j, "l");
         int r = getLength(i, j, "r");
         int u = getLength(i, j, "u");
         int d = getLength(i, j, "d");
-        int total = 0;
-        for(int k = 0; k< shipAlive.getSize(); k++)
-        {
-          int total += getCombo(r, l, ship.get(k).get(1));
-          int total += getCombo(u, d, ship.get(k).get(1));
+        for(int k = 0; k< shipAlive.getSize(); k++){
+          total += getCombo(r, l, shipAlive.get(k).get(1));
+          total += getCombo(u, d, shipAlive.get(k).get(1));
         }
         scoreBoard.get(i).set(j, total);
       }
     }
   }
-  public String convert(int num){
+  public static String convert(int num){
     if(num == 0){
       return "A";
     }
-    if(num == 1){
+    else if(num == 1){
       return "B";
     }
-    if(num == 2){
+    else if(num == 2){
       return "C";
     }
-    if(num == 3){
+    else if(num == 3){
       return "D";
     }
-    if(num == 4){
+    else if(num == 4){
       return "E";
     }
-    if(num == 5){
+    else if(num == 5){
       return "F";
     }
-    if(num == 6){
+    else if(num == 6){
       return "G";
     }
-    if(num == 7){
+    else if(num == 7){
       return "H";
     }
-    if(num == 8){
+    else if(num == 8){
       return "I";
     }
-    if(num == 9){
+    else if(num == 9){
       return "J";
+    }else{
+      return "something went terribly wrong";
     }
   }
-  public int Getcombo(int len1, int len2, int shipSize){
-    in total = 0;
+  public static int Getcombo(int len1, int len2, int shipSize){
+    int total = 0;
     for(int i = shipSize - 1; i > 0; i ++){
       int j = shipSize - 1 - i;
       if(len1 >= i && len2 >= j){
@@ -92,18 +86,27 @@ public class Search{
     }
     return total;
   }
-  public int getLength(int i, int j, String direction){
+  public static int getLength(int i, int j, String direction){
+    int inc = 1;
     if(direction.equals("l")){
-    
+      while(placedShip.get(i-inc).get(j) == 0 && i-inc > 0){
+        inc++;
+      }
     }
     if(direction.equals("r")){
-    
+      while(placedShip.get(i+inc).get(j) == 0 && i+inc < 10){
+        inc++;
+      }
     }
     if(direction.equals("u")){
-    
+      while(placedShip.get(i).get(j-inc) == 0 && j-inc > 0){
+        inc++;
+      }
     }
     if(direction.equals("d")){
-    
+      while(placedShip.get(i).get(j+inc) == 0 && j+inc < 10){
+        inc++;
+      }
     }
   }
 }
