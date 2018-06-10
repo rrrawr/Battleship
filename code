@@ -1,1 +1,208 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Scanner;
+import java.util.Random;
+class Placeship extends JFrame {
+  Scanner myScanner = new Scanner(System.in);
+  int difficulty;
+  final int ROW = 10;
+  final int COL = 10;
+  JButton board[][] = new JButton [ROW][COL];
+  JPanel pan = new JPanel();
+  JFrame frame = new JFrame();
+  int side; //used only for advancaed difficulty to determine which side of the grid does the AI place the ships on
+  int direction;
+  int x;
+  int y;
+  public Placeship(){
+    System.out.print("Enter a difficulty level (0:Easy ; 1:Advanced)");
+    difficulty = myScanner.nextInt();
+    GridLayout lay = new GridLayout (ROW,COL,1,1);
+    frame.setSize(800,600);
+    frame.setTitle("Battleship");
+    frame.setLayout(new BorderLayout());
+    pan.setLayout(lay);
+    for (int i=0 ; i<ROW ; i++){
+      for (int q=0 ; q<COL ; q++){
+        board[i][q] = new JButton();
+        pan.add(board[i][q]);
+      }
+    }
+    frame.add(pan);
+    frame.setVisible(true);
+    ShipPlacing(difficulty);
+  }
+  
+  public void ShipPlacing(int newDifficulty){
+    int size = 2;//initialize the size of the ship to be 2 
+    if (newDifficulty == 0 ){
+    while (size!=6){ //while loop used to place ships from size 2 to size 5  
+      if (size == 3){
+        for (int i=0 ; i<2 ; i++){
+          randomize();
+          while (canPlace(x,y,direction,size) == false){ 
+            randomize();
+          }
+          place(x,y,direction,size);
+        }
+      }
+      else {
+        randomize();
+          while (canPlace(x,y,direction,size) == false){ 
+            randomize();
+          }
+          place(x,y,direction,size);
+      }
+      size++;  
+    }
+    }
+    else if (newDifficulty == 1){
+      int newx = 0;
+      int newy = 0;
+      randomize();
+      if (side == 0){
+        newx=0;
+        newy=2;
+        for (int q=0 ; q<5 ; q++){
+          if (q == 4){
+             size = 3;
+          }
+          place(newx,newy,2,size);
+          newy++;
+          size++;
+        }
+      }
+      else if (side == 1){
+        newx = 2;
+        newy = 9;
+        for (int q=0 ; q<5 ; q++){
+          if (q == 4){
+             size = 3;
+          }
+          place(newx,newy,3,size);
+          newx++;
+          size++;
+        }
+      }
+      else if (side == 2){
+        newx = 9;
+        newy = 2;
+        for (int q=0 ; q<5 ; q++){
+          if (q == 4){
+             size = 3;
+          }
+          place(newx,newy,0,size);
+          newy++;
+          size++;
+        }
+      }
+      else if (side == 3){
+        newx = 2;
+        newy = 0;
+        for (int q=0 ; q<5 ; q++){
+          if (q == 4){
+             size = 3;
+          }
+          place(newx,newy,1,size);
+          newx++;
+          size++;
+        }
+      }
+    }
+          
+  }
+  public boolean canPlace(int r, int c, int d,int newSize){
+    boolean check = true;
+    if (d==0){
+      if ((r-(newSize-1)) < 0){
+        check = false;
+      }
+      else {
+        for (int i=0 ; i<newSize ; i++){
+          if (board[r][c].getText().equals("S")){
+            check = false;
+          }
+          r--;
+        }
+      }
+    }
+    else if (d==1){
+      if ((c+(newSize+1)) >= COL){
+        check = false;
+      }
+      else {
+        for (int i=0 ; i<newSize ; i++){
+          if (board[r][c].getText().equals("S")){
+            check = false;
+          }
+          c++;
+        }
+      }
+    }
+    else if (d==2){
+      if ((r+(newSize-1)) >= ROW){
+        check = false;
+      }
+      else {
+        for (int i=0 ; i<newSize ; i++){
+          if (board[r][c].getText().equals("S")){
+            check = false;
+          }
+          r++;
+        }
+      }
+    }
+    else if (d==3){
+      if ((c-(newSize-1)) < 0){
+        check = false;
+      }
+      else {
+        for (int i=0 ; i<newSize ; i++){
+          if (board[r][c].getText().equals("S")){
+            check = false;
+          }
+          c--;
+        }
+      }
+    }
+    return check;
+  }
+  public void place(int r,int c,int d,int newSize){
+    if (d==0){
+      for (int a=0 ; a<newSize ; a++){
+        board[r][c].setText("S");
+        r--;
+      }
+    }
+    else if (d==1){
+      for (int a=0 ; a<newSize ; a++){
+        board[r][c].setText("S");
+        c++;
+      }
+    }
+    else if (d==2){
+      for (int a=0 ; a<newSize ; a++){
+        board[r][c].setText("S");
+        r++;
+      }
+    }
+    else if (d==3){
+      for (int a=0 ; a<newSize ; a++){
+        board[r][c].setText("S");
+        c--;
+      }
+    }
+  }
+  public void randomize(){
+    Random rand = new Random();
+    side = (int)(rand.nextDouble()*4); //side: 0---Top ; 1----Right ; 2----Bottom ; 3----Left
+    direction = (int)(rand.nextDouble() * 4);  //direction: 0---Up ; 1----Right ; 2----Down ; 3----Left
+    x = (int)(rand.nextDouble() * ROW);            //randomize the coordinates of the ship
+    y = (int)(rand.nextDouble() * COL);
+  }
+  public static void main  (String args[]){ 
+    new Placeship();
+  }
+}
 
