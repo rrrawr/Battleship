@@ -1,7 +1,28 @@
 import java.util.*;
 public class Search{
 static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Integer>>();    //initialize!!!
+static ArrayList<ArrayList<Integer>> shipAlive = new ArrayList<ArrayList<Integer>>();
+static ArrayList<ArrayList<Integer>> placedShip = new ArrayList<ArrayList<Integer>>();
   public static void main(String[] args) {
+    for(int i = 0; i < 10; i++)
+    {
+      scoreBoard.add(new ArrayList<Integer>(10));
+      placedShip.add(new ArrayList<Integer>(10));
+    }
+    for(int i = 0; i < 10; i++)
+    {
+      for(int j = 0; j < 10; j++)
+      {
+        scoreBoard.get(i).add(0);
+        placedShip.get(i).add(0);
+      }
+    }
+    for(int i = 0; i < 5; i++)
+    {
+      shipAlive.add(new ArrayList<Integer>(2));
+      shipAlive.get(i).add(1);
+      shipAlive.get(i).add(i);
+    }
     SearchShip();
   }
   public static void SearchShip(){
@@ -26,7 +47,7 @@ static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Intege
     }
     System.out.print("hit" + (maxI+1) + convert(maxJ));
   }
-  public static int DetermineScore(){
+  public static void DetermineScore(){
     for(int i = 0; i < scoreBoard.size(); i++){
       for( int j = 0; j < scoreBoard.get(i).size(); j++){
         int total = 0;
@@ -34,9 +55,11 @@ static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Intege
         int r = getLength(i, j, "r");
         int u = getLength(i, j, "u");
         int d = getLength(i, j, "d");
-        for(int k = 0; k< shipAlive.getSize(); k++){
-          total += getCombo(r, l, shipAlive.get(k).get(1));
-          total += getCombo(u, d, shipAlive.get(k).get(1));
+        for(int k = 0; k< shipAlive.size(); k++){
+          if(shipAlive.get(k).get(0) == 1){
+            total += getCombo(r, l, shipAlive.get(k).get(1));
+            total += getCombo(u, d, shipAlive.get(k).get(1));
+          }
         }
         scoreBoard.get(i).set(j, total);
       }
@@ -76,7 +99,7 @@ static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Intege
       return "something went terribly wrong";
     }
   }
-  public static int Getcombo(int len1, int len2, int shipSize){
+  public static int getCombo(int len1, int len2, int shipSize){
     int total = 0;
     for(int i = shipSize - 1; i > 0; i ++){
       int j = shipSize - 1 - i;
@@ -89,24 +112,41 @@ static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Intege
   public static int getLength(int i, int j, String direction){
     int inc = 1;
     if(direction.equals("l")){
-      while(placedShip.get(i-inc).get(j) == 0 && i-inc > 0){
-        inc++;
+      for(;i-inc >= 0;){
+        if(placedShip.get(i-inc).get(j) == 0){
+          inc++;
+        }else{
+          break;
+        }
       }
     }
     if(direction.equals("r")){
-      while(placedShip.get(i+inc).get(j) == 0 && i+inc < 10){
-        inc++;
+      for(;i+inc < 10;){
+        if(placedShip.get(i+inc).get(j) == 0){
+          inc++;
+        }else{
+          break;
+        }
       }
     }
     if(direction.equals("u")){
-      while(placedShip.get(i).get(j-inc) == 0 && j-inc > 0){
-        inc++;
+      for(;j-inc >= 0;){
+        if(placedShip.get(i).get(j-inc) == 0){
+          inc++;
+        }else{
+          break;
+        }
       }
     }
     if(direction.equals("d")){
-      while(placedShip.get(i).get(j+inc) == 0 && j+inc < 10){
-        inc++;
+      for(;j+inc < 10;){
+        if(placedShip.get(i).get(j+inc) == 0){
+          inc++;
+        }else{
+          break;
+        }
       }
     }
+    return inc - 1;
   }
 }
