@@ -1,152 +1,167 @@
+package Search;    //commented code is for checking. Email me if there are any errors or clarifications required.
+
 import java.util.*;
 public class Search{
-static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Integer>>();    //initialize!!!
-static ArrayList<ArrayList<Integer>> shipAlive = new ArrayList<ArrayList<Integer>>();
-static ArrayList<ArrayList<Integer>> placedShip = new ArrayList<ArrayList<Integer>>();
-  public static void main(String[] args) {
-    for(int i = 0; i < 10; i++)
-    {
-      scoreBoard.add(new ArrayList<Integer>(10));
-      placedShip.add(new ArrayList<Integer>(10));
-    }
-    for(int i = 0; i < 10; i++)
-    {
-      for(int j = 0; j < 10; j++)
-      {
-        scoreBoard.get(i).add(0);
-        placedShip.get(i).add(0);
-      }
-    }
-    for(int i = 0; i < 5; i++)
-    {
-      shipAlive.add(new ArrayList<Integer>(2));
-      shipAlive.get(i).add(1);
-      shipAlive.get(i).add(i);
-    }
-    SearchShip();
-  }
-  public static void SearchShip(){
-    DetermineScore();
-    FindMaxScore();
-  }
-  public static void FindMaxScore(){
-    int maxScore = scoreBoard.get(1).get(1);
-    int maxI = 1;
-    int maxJ = 1;
-    for(int i = 1; i < scoreBoard.size()-2; i++)
-    {
-      for( int j = 1; j < scoreBoard.get(i).size()-2; j++)
-      {
-        if(scoreBoard.get(i).get(j) > maxScore)
-        {
-          maxScore = scoreBoard.get(i).get(j);
-          maxI = i;
-          maxJ = j;
-        }
-      }
-    }
-    System.out.print("hit" + (maxI+1) + convert(maxJ));
-  }
-  public static void DetermineScore(){
-    for(int i = 0; i < scoreBoard.size(); i++){
-      for( int j = 0; j < scoreBoard.get(i).size(); j++){
-        int total = 0;
-        int l = getLength(i, j, "l");
-        int r = getLength(i, j, "r");
-        int u = getLength(i, j, "u");
-        int d = getLength(i, j, "d");
-        for(int k = 0; k< shipAlive.size(); k++){
-          if(shipAlive.get(k).get(0) == 1){
-            total += getCombo(r, l, shipAlive.get(k).get(1));
-            total += getCombo(u, d, shipAlive.get(k).get(1));
-          }
-        }
-        scoreBoard.get(i).set(j, total);
-      }
-    }
-  }
-  public static String convert(int num){
-    if(num == 0){
-      return "A";
-    }
-    else if(num == 1){
-      return "B";
-    }
-    else if(num == 2){
-      return "C";
-    }
-    else if(num == 3){
-      return "D";
-    }
-    else if(num == 4){
-      return "E";
-    }
-    else if(num == 5){
-      return "F";
-    }
-    else if(num == 6){
-      return "G";
-    }
-    else if(num == 7){
-      return "H";
-    }
-    else if(num == 8){
-      return "I";
-    }
-    else if(num == 9){
-      return "J";
-    }else{
-      return "something went terribly wrong";
-    }
-  }
-  public static int getCombo(int len1, int len2, int shipSize){
-    int total = 0;
-    for(int i = shipSize - 1; i > 0; i ++){
-      int j = shipSize - 1 - i;
-      if(len1 >= i && len2 >= j){
-        total++;
-      }
-    }
-    return total;
-  }
-  public static int getLength(int i, int j, String direction){
-    int inc = 1;
-    if(direction.equals("l")){
-      for(;i-inc >= 0;){
-        if(placedShip.get(i-inc).get(j) == 0){
-          inc++;
-        }else{
-          break;
-        }
-      }
-    }
-    if(direction.equals("r")){
-      for(;i+inc < 10;){
-        if(placedShip.get(i+inc).get(j) == 0){
-          inc++;
-        }else{
-          break;
-        }
-      }
-    }
-    if(direction.equals("u")){
-      for(;j-inc >= 0;){
-        if(placedShip.get(i).get(j-inc) == 0){
-          inc++;
-        }else{
-          break;
-        }
-      }
-    }
-    if(direction.equals("d")){
-      for(;j+inc < 10;){
-        if(placedShip.get(i).get(j+inc) == 0){
-          inc++;
-        }else{
-          break;
-        }
-      }
-    }
-    return inc - 1;
-  }
+	static ArrayList<ArrayList<Integer>> scoreBoard = new ArrayList<ArrayList<Integer>>();    //initializing scoreBoard arraylist
+	//static ArrayList<ArrayList<Integer>> shipAlive = new ArrayList<ArrayList<Integer>>();
+	//static ArrayList<ArrayList<Integer>> placedShip = new ArrayList<ArrayList<Integer>>();
+	public static void main(String[] args) {    
+		for(int i = 0; i < 10; i++)    //initializing the elements of scoreBoard
+	    {
+	      scoreBoard.add(new ArrayList<Integer>(10));
+	      //placedShip.add(new ArrayList<Integer>(10));
+	    }
+	    for(int i = 0; i < 10; i++)
+	    {
+	      for(int j = 0; j < 10; j++)
+	      {
+	        scoreBoard.get(i).add(0);
+	        //placedShip.get(i).add(0);
+	      }
+	    }
+	 /* for(int i = 0; i < 6; i++)
+	    {
+	      shipAlive.add(new ArrayList<Integer>(2));
+	      shipAlive.get(i).add(1);
+	      shipAlive.get(i).add(i);
+	    } */
+	    SearchShip();    //calling searchShip
+	 /* for(int i = 0; i < 10; i++) {
+	   	System.out.println(" ");
+	    		for(int j = 0; j < 10; j++) {
+	    			System.out.print(scoreBoard.get(i).get(j)+" ");
+	    		}
+	    }  */
+	  }
+	  public static void SearchShip(){
+	    DetermineScore();    //determine score
+	    FindMaxScore();    //find the maximum of the scores
+	  }
+	  public static void FindMaxScore(){    //find the maximum of the scores
+	    int maxScore = scoreBoard.get(1).get(1);
+	    int maxI = 1;    //Storing the index of max score
+	    int maxJ = 1;
+	    for(int i = 1; i < scoreBoard.size()-2; i++)    //looping through scoreBoard
+	    {
+	      for( int j = 1; j < scoreBoard.get(i).size()-2; j++)
+	      {
+	        if(scoreBoard.get(i).get(j) > maxScore)
+	        {
+	          maxScore = scoreBoard.get(i).get(j);
+	          maxI = i;
+	          maxJ = j;
+	        }
+	      }
+	    }
+	    System.out.print("hit" + (maxI+1) + convert(maxJ));    //outputting the point with the max score
+	  }
+	  public static void DetermineScore(){    //determine score
+	    for(int i = 0; i < scoreBoard.size(); i++){
+	      for( int j = 0; j < scoreBoard.get(i).size(); j++){
+	    	  	if(placedShip.get(i).get(j) == 0) {    //checking if location has been hit or not
+	    	  		int total = 0;
+	    	  		int l = getLength(i, j, "l");    //determine length of empty grid to the left of the chosen grid
+	    	  		int r = getLength(i, j, "r");    //determine length of empty grid to the right of the chosen grid
+	    	  		int u = getLength(i, j, "u");    //determine length of empty grid above the chosen grid
+	    	  		int d = getLength(i, j, "d");    //determine length of empty grid below the chosen grid
+	    	  		for(int k = 0; k< shipAlive.size(); k++){    //looping through the ships that are still alive
+	    	  			if(shipAlive.get(k).get(0) == 1){
+	    	  				total += getCombo(r, l, shipAlive.get(k).get(1));   //finding the total combination of chosen ship that can occupy chosen square and add it to total
+	    	  				total += getCombo(u, d, shipAlive.get(k).get(1));
+	    	  			}
+	    	  		}
+	        scoreBoard.get(i).set(j, total);    //set the score to the scoreBoard
+	    	  	}else {
+	    	  		scoreBoard.get(i).set(j, 0);
+	    	  	}
+	      }
+	    }
+	  }
+	  public static String convert(int num){   //converting the index of array to letters on battleship board
+	    if(num == 0){
+	      return "A";
+	    }
+	    else if(num == 1){
+	      return "B";
+	    }
+	    else if(num == 2){
+	      return "C";
+	    }
+	    else if(num == 3){
+	      return "D";
+	    }
+	    else if(num == 4){
+	      return "E";
+	    }
+	    else if(num == 5){
+	      return "F";
+	    }
+	    else if(num == 6){
+	      return "G";
+	    }
+	    else if(num == 7){
+	      return "H";
+	    }
+	    else if(num == 8){
+	      return "I";
+	    }
+	    else if(num == 9){
+	      return "J";
+	    }else{
+	      return "something went terribly wrong";    //this never happens
+	    }
+	  }
+	  public static int getCombo(int len1, int len2, int shipSize){    //finds the total combination of chosen ship that can occupy chosen square given empty space to the left and right of square and ship length
+		    int total = 0;
+		    for(int i = shipSize - 1; i >= 0; i --){
+		      int j = shipSize - 1 - i;
+		      if(len1 >= i && len2 >= j){
+		        total++;
+		      }
+		    }
+		    return total;
+		  }
+	  public static int getLength(int i, int j, String direction){    //finds amount of empty squares from a square given coordinates of the square and direction
+	    int inc = 1;
+	    if(direction.equals("l")){
+	      for(;i-inc >= 0;){
+	        if(placedShip.get(i-inc).get(j) == 0){
+	          inc++;
+	        }else{
+	          break;
+	        }
+	      }
+	    }
+	    if(direction.equals("r")){
+	      for(;i+inc < 10;){
+	        if(placedShip.get(i+inc).get(j) == 0){
+	          inc++;
+	        }else{
+	          break;
+	        }
+	      }
+	    }
+	    if(direction.equals("u")){
+	      for(;j-inc >= 0;){
+	        if(placedShip.get(i).get(j-inc) == 0){
+	          inc++;
+	        }else{
+	          break;
+	        }
+	      }
+	    }
+	    if(direction.equals("d")){
+	      for(;j+inc < 10;){
+	        if(placedShip.get(i).get(j+inc) == 0){
+	          inc++;
+	        }else{
+	          break;
+	        }
+	      }
+	    }
+	    return inc - 1;
+	  }
 }
+
+
+
