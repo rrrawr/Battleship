@@ -6,21 +6,17 @@ public class Search{
 	//static ArrayList<ArrayList<Integer>> shipAlive = new ArrayList<ArrayList<Integer>>();
 	//static ArrayList<ArrayList<Integer>> placedShip = new ArrayList<ArrayList<Integer>>();
 	public static void main(String[] args) {    
-		for(int i = 0; i < 10; i++)    //initializing the elements of scoreBoard
-	    {
+	for(int i = 0; i < 10; i++){    //initializing the elements of scoreBoard
 	      scoreBoard.add(new ArrayList<Integer>(10));
 	      //placedShip.add(new ArrayList<Integer>(10));
 	    }
-	    for(int i = 0; i < 10; i++)
-	    {
-	      for(int j = 0; j < 10; j++)
-	      {
+	    for(int i = 0; i < 10; i++){
+	      for(int j = 0; j < 10; j++){
 	        scoreBoard.get(i).add(0);
 	        //placedShip.get(i).add(0);
 	      }
 	    }
-	 /* for(int i = 0; i < 6; i++)
-	    {
+	 /* for(int i = 0; i < 6; i++){
 	      shipAlive.add(new ArrayList<Integer>(2));
 	      shipAlive.get(i).add(1);
 	      shipAlive.get(i).add(i);
@@ -41,12 +37,10 @@ public class Search{
 	    int maxScore = scoreBoard.get(1).get(1);
 	    int maxI = 1;    //Storing the index of max score
 	    int maxJ = 1;
-	    for(int i = 1; i < scoreBoard.size()-2; i++)    //looping through scoreBoard
-	    {
+	    for(int i = 1; i < scoreBoard.size()-2; i++){    //looping through scoreBoard
 	      for( int j = 1; j < scoreBoard.get(i).size()-2; j++)
 	      {
-	        if(scoreBoard.get(i).get(j) > maxScore)
-	        {
+	        if(scoreBoard.get(i).get(j) > maxScore){
 	          maxScore = scoreBoard.get(i).get(j);
 	          maxI = i;
 	          maxJ = j;
