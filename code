@@ -37,80 +37,58 @@ class Placeship extends JFrame {
   public void ShipPlacing(int newDifficulty){
     int size = 2;//initialize the size of the ship to be 2 
     if (newDifficulty == 0 ){
-    while (size!=6){ //while loop used to place ships from size 2 to size 5  
-      if (size == 3){
-        for (int i=0 ; i<2 ; i++){
+      while (size!=6){ //while loop used to place ships from size 2 to size 5  
+        if (size == 3){
+          for (int i=0 ; i<2 ; i++){
+            randomize();
+            while (canPlace(x,y,direction,size) == false){ 
+              randomize();
+            }
+            place(x,y,direction,size);
+          }
+        }
+        else {
           randomize();
           while (canPlace(x,y,direction,size) == false){ 
             randomize();
           }
           place(x,y,direction,size);
         }
+        size++;  
       }
-      else {
-        randomize();
-          while (canPlace(x,y,direction,size) == false){ 
-            randomize();
-          }
-          place(x,y,direction,size);
-      }
-      size++;  
-    }
     }
     else if (newDifficulty == 1){
-      int newx = 0;
-      int newy = 0;
       randomize();
       if (side == 0){
-        newx=0;
-        newy=2;
-        for (int q=0 ; q<5 ; q++){
-          if (q == 4){
-             size = 3;
-          }
-          place(newx,newy,2,size);
-          newy++;
-          size++;
-        }
+          place(0,0,2,2);
+          place(0,9,3,3);
+          place(4,0,2,3);
+          place(9,9,0,4);
+          place(9,0,1,5);
       }
+  
       else if (side == 1){
-        newx = 2;
-        newy = 9;
-        for (int q=0 ; q<5 ; q++){
-          if (q == 4){
-             size = 3;
-          }
-          place(newx,newy,3,size);
-          newx++;
-          size++;
-        }
+          place(0,0,2,3);
+          place(0,9,3,3);
+          place(6,9,0,4);
+          place(9,9,0,2);
+          place(9,0,1,5);
       }
       else if (side == 2){
-        newx = 9;
-        newy = 2;
-        for (int q=0 ; q<5 ; q++){
-          if (q == 4){
-             size = 3;
-          }
-          place(newx,newy,0,size);
-          newy++;
-          size++;
-        }
+          place(0,0,2,3);
+          place(0,9,3,4);
+          place(4,9,0,3);
+          place(9,9,0,2);
+          place(9,0,1,5);
       }
       else if (side == 3){
-        newx = 2;
-        newy = 0;
-        for (int q=0 ; q<5 ; q++){
-          if (q == 4){
-             size = 3;
-          }
-          place(newx,newy,1,size);
-          newx++;
-          size++;
-        }
-      }
+        place(0,0,2,4);
+        place(0,9,3,5);
+        place(4,9,0,2);
+        place(9,9,0,3);
+        place(9,0,1,3);
     }
-          
+    }
   }
   public boolean canPlace(int r, int c, int d,int newSize){
     boolean check = true;
@@ -196,7 +174,7 @@ class Placeship extends JFrame {
   }
   public void randomize(){
     Random rand = new Random();
-    side = (int)(rand.nextDouble()*4); //side: 0---Top ; 1----Right ; 2----Bottom ; 3----Left
+    side = (int)(rand.nextDouble()*4); //side: determine the 4 different arrangements for advanced AI ship placement
     direction = (int)(rand.nextDouble() * 4);  //direction: 0---Up ; 1----Right ; 2----Down ; 3----Left
     x = (int)(rand.nextDouble() * ROW);            //randomize the coordinates of the ship
     y = (int)(rand.nextDouble() * COL);
@@ -205,4 +183,3 @@ class Placeship extends JFrame {
     new Placeship();
   }
 }
-
